@@ -8,7 +8,7 @@ import {
   FaMapMarker,
 } from "react-icons/fa";
 
-type Property = {
+export type Property = {
   _id: string;
   owner: string;
   name: string;
