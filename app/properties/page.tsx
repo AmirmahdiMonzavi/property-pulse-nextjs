@@ -1,13 +1,20 @@
 import PropertyCard from "@/components/PropertyCard";
 
-import connectDB from "@/config/database";
-import Property from "@/models/Property";
+// import connectDB from "@/config/database";
+// import Property from "@/models/Property";
 
 import { type Property as PropertyType } from "@/components/PropertyCard";
 
+const fetchProperties = async () => {
+  const response = await fetch("http://localhost:3000/api/properties");
+  return await response.json();
+};
+
 const PropertiesPage = async () => {
-  await connectDB();
-  const properties = (await Property.find({}).lean()) as PropertyType[];
+  // await connectDB();
+  // const properties = (await Property.find({}).lean()) as PropertyType[];
+
+  const properties = (await fetchProperties()) as PropertyType[];
 
   return (
     <section className="px-4 py-6">
