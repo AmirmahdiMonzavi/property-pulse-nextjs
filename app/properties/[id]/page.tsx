@@ -10,10 +10,14 @@ import Property from "@/models/Property";
 
 import { type Property as PropertyType } from "@/components/PropertyCard";
 import PropertyDetails from "@/components/PropertyDetails";
+import { convertToSerializableObject } from "@/utils/converToObject";
 
 const PropertyPage = async ({ params }: { params: { id: string } }) => {
   await connectDB();
-  const property = (await Property.findById(params.id).lean()) as PropertyType;
+  const propertyDoc = (await Property.findById(
+    params.id
+  ).lean()) as PropertyType;
+  const property = convertToSerializableObject(propertyDoc);
 
   return (
     <>
