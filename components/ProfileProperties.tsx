@@ -2,10 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 import { Property } from "./PropertyCard";
+
+import deleteProperty from "@/actions/deleteProperty";
 
 const ProfileProperties = ({
   properties: initialProperties,
@@ -14,7 +16,22 @@ const ProfileProperties = ({
 }) => {
   const [properties, setProperties] = useState(initialProperties);
 
-  console.log(properties);
+  const handleDeleteProperty = async (propertyId: string) => {
+    const confirmed = window.confirm("Are you sure?");
+
+    if (!confirmed) {
+      return;
+    }
+
+    await deleteProperty(propertyId);
+
+    const updatedProperties = properties.filter(
+      (property) => property._id !== propertyId
+    );
+    setProperties(updatedProperties);
+
+    toast.success("property deleted successfully");
+  };
 
   return properties.map((property, index) => (
     <div key={index} className="mb-10">
@@ -44,6 +61,7 @@ const ProfileProperties = ({
         <button
           className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600"
           type="button"
+          onClick={() => handleDeleteProperty(property._id)}
         >
           Delete
         </button>
