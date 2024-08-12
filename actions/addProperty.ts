@@ -73,7 +73,7 @@ const addProperty = async (formData: FormData) => {
   const newProperty = new Property(propertyData);
   await newProperty.save();
 
-  revalidatePath("/");
+  revalidatePath("/", "layout");
   redirect(`/properties/${newProperty._id}`);
 };
 
