@@ -7,6 +7,11 @@ const PropertySchema = new Schema(
       ref: "User",
     },
 
+    type: {
+      type: String,
+      required: true,
+    },
+
     name: {
       type: String,
       required: true,

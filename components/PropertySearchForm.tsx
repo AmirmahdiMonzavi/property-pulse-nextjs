@@ -1,6 +1,30 @@
+"use client";
+
+import { useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
+
 const PropertySearchForm = () => {
+  const [location, setLocation] = useState("");
+  const [type, setType] = useState("All");
+
+  const router = useRouter();
+
+  const handleSubmitForm = (event: FormEvent) => {
+    event.preventDefault();
+
+    if (location.trim() === "" && type === "All") {
+      router.push("/properties");
+    } else {
+      const query = `?location=${location}&propertyType=${type}`;
+      router.push(`/properties/search-results${query}`);
+    }
+  };
+
   return (
-    <form className="mt-3 mx-auto max-w-2xl w-full flex flex-col md:flex-row items-center">
+    <form
+      onSubmit={handleSubmitForm}
+      className="mt-3 mx-auto max-w-2xl w-full flex flex-col md:flex-row items-center"
+    >
       <div className="w-full md:w-3/5 md:pr-2 mb-4 md:mb-0">
         <label htmlFor="location" className="sr-only">
           Location
@@ -10,6 +34,10 @@ const PropertySearchForm = () => {
           id="location"
           placeholder="Enter Location (City, State, Zip, etc"
           className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring focus:ring-blue-500"
+          onChange={(event: FormEvent<HTMLInputElement>) =>
+            setLocation(event.currentTarget.value)
+          }
+          value={location}
         />
       </div>
       <div className="w-full md:w-2/5 md:pl-2">
@@ -19,6 +47,10 @@ const PropertySearchForm = () => {
         <select
           id="property-type"
           className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring focus:ring-blue-500"
+          onChange={(event: FormEvent<HTMLSelectElement>) =>
+            setType(event.currentTarget.value)
+          }
+          value={type}
         >
           <option value="All">All</option>
           <option value="Apartment">Apartment</option>

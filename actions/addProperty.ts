@@ -40,8 +40,8 @@ const addProperty = async (formData: FormData) => {
     amenities,
     rates: {
       nightly: formData.get("rates.nightly"),
-      weekly: formData.get("weekly"),
-      monthly: formData.get("monthly"),
+      weekly: formData.get("rates.weekly"),
+      monthly: formData.get("rates.monthly"),
     },
     seller_info: {
       name: formData.get("seller_info.name"),
