@@ -4,7 +4,7 @@ import connectDB from "@/config/database";
 import Message from "@/models/Message";
 import { getSessionUser } from "@/utils/getSessionUser";
 
-const addProperty = async (formData: FormData) => {
+const addMessage = async (formData: FormData) => {
   await connectDB();
 
   const sessionUser = await getSessionUser();
@@ -36,4 +36,4 @@ const addProperty = async (formData: FormData) => {
   return { submitted: true };
 };
 
-export default addProperty;
+export default addMessage;
