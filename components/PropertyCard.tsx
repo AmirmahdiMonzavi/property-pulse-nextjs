@@ -91,7 +91,22 @@ const PropertyCard = ({ property }: { property: Property }) => {
 
         <div className="flex justify-center gap-4 text-green-900 text-sm mb-4">
           <p className="flex flex-col items-center justify-center gap-1 lg:flex-row">
-            <FaMoneyBill className="md:hidden lg:inline" /> {getRate(property)}
+            {property.rates.nightly && (
+              <FaMoneyBill className="md:hidden lg:inline" />
+            )}
+            Nightly
+          </p>
+          <p className="flex flex-col items-center justify-center gap-1 lg:flex-row">
+            {property.rates.weekly && (
+              <FaMoneyBill className="md:hidden lg:inline" />
+            )}
+            Weekly
+          </p>
+          <p className="flex flex-col items-center justify-center gap-1 lg:flex-row">
+            {property.rates.monthly && (
+              <FaMoneyBill className="md:hidden lg:inline" />
+            )}
+            Monthly
           </p>
         </div>
 
