@@ -2,7 +2,7 @@
 
 import { createContext, useState } from "react";
 
-const MessageContext = createContext<{
+export const MessageContext = createContext<{
   unreadMessageCount: number;
   handleSetUnreadMessageCount: (count: number) => void;
 } | null>(null);
