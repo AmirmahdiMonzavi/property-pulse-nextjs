@@ -1,12 +1,18 @@
 "use client";
 
-import { createContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from "react";
 import { useSession } from "next-auth/react";
 import getUnreadMessageCount from "@/actions/getUnreadMessageCount";
 
 export const MessageContext = createContext<{
   unreadMessageCount: number;
-  handleSetUnreadMessageCount: (count: number) => void;
+  setUnreadMessageCount: Dispatch<SetStateAction<number>>;
 } | null>(null);
 
 const MessageProvider = ({ children }: { children: React.ReactNode }) => {
@@ -20,18 +26,13 @@ const MessageProvider = ({ children }: { children: React.ReactNode }) => {
         if (res.count) {
           setUnreadMessageCount(res.count);
         }
-        
       });
     }
   }, [getUnreadMessageCount, session]);
 
-  const handleSetUnreadMessageCount = (count: number) => {
-    setUnreadMessageCount(count);
-  };
-
   return (
     <MessageContext.Provider
-      value={{ unreadMessageCount, handleSetUnreadMessageCount }}
+      value={{ unreadMessageCount, setUnreadMessageCount }}
     >
       {children}
     </MessageContext.Provider>

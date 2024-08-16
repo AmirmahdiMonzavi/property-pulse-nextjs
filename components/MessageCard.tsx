@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { toast } from "react-toastify";
+
+import { MessageContext } from "@/context/message-context";
 
 import markMessageAsRead from "@/actions/markMessageAsRead";
 import deleteMessage from "@/actions/deleteMessage";
@@ -25,16 +27,26 @@ export type Message = {
 const MessageCard = ({ message }: { message: Message }) => {
   const [isRead, setIsRead] = useState(message.read);
 
+  const messageCtx = useContext(MessageContext);
+
   const handleReadClick = async () => {
     const read = await markMessageAsRead(message._id);
 
     setIsRead(read);
+    messageCtx?.setUnreadMessageCount((prevState) => {
+      if (read) {
+        return prevState - 1;
+      } else {
+        return prevState + 1;
+      }
+    });
     toast.success(`Mark As ${read ? "Read" : "New"}`);
   };
 
   const handleDeleteClick = async () => {
     await deleteMessage(message._id);
 
+    messageCtx?.setUnreadMessageCount((prevState) => prevState - 1);
     toast.success("Message Deleted");
   };
 
