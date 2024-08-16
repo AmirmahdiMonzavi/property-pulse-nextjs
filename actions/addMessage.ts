@@ -4,7 +4,7 @@ import connectDB from "@/config/database";
 import Message from "@/models/Message";
 import { getSessionUser } from "@/utils/getSessionUser";
 
-const addMessage = async (formData: FormData) => {
+const addMessage = async (_previousState: any, formData: FormData) => {
   await connectDB();
 
   const sessionUser = await getSessionUser();
