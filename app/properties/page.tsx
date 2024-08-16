@@ -1,20 +1,35 @@
 import PropertyCard from "@/components/PropertyCard";
 
-// import connectDB from "@/config/database";
-// import Property from "@/models/Property";
+import connectDB from "@/config/database";
+import Property from "@/models/Property";
+
+import Pagination from "@/components/Pagination";
 
 import { type Property as PropertyType } from "@/components/PropertyCard";
 
-const fetchProperties = async () => {
-  const response = await fetch("http://localhost:3000/api/properties");
-  return await response.json();
-};
+// const fetchProperties = async () => {
+//   const response = await fetch("http://localhost:3000/api/properties");
+//   return await response.json();
+// };
 
-const PropertiesPage = async () => {
-  // await connectDB();
-  // const properties = (await Property.find({}).lean()) as PropertyType[];
+const PropertiesPage = async ({
+  searchParams: { page = "1", pageSize = "9" },
+}: {
+  searchParams: {
+    page: string;
+    pageSize: string;
+  };
+}) => {
+  await connectDB();
 
-  const properties = (await fetchProperties()) as PropertyType[];
+  const skip = (+page - 1) * +pageSize;
+  const totalProperties = await Property.countDocuments({});
+
+  const properties = (await Property.find({})
+    .skip(skip)
+    .limit(+pageSize)) as PropertyType[];
+
+  // const properties = (await fetchProperties()) as PropertyType[];
 
   return (
     <section className="px-4 py-6">
@@ -27,6 +42,13 @@ const PropertiesPage = async () => {
               <PropertyCard key={property._id} property={property} />
             ))}
           </div>
+        )}
+        {totalProperties > +pageSize && (
+          <Pagination
+            page={parseInt(page)}
+            pageSize={parseInt(pageSize)}
+            totalProperties={totalProperties}
+          />
         )}
       </div>
     </section>
