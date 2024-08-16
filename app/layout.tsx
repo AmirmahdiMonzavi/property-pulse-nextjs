@@ -1,9 +1,9 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import AuthProvider from "@/components/AuthProvider";
+import MessageProvider from "@/context/message-context";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
-
 import "@/assets/styles/globals.css";
 
 export const metadata = {
@@ -15,14 +15,16 @@ export const metadata = {
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <AuthProvider>
-      <html lang="en">
-        <body>
-          <ToastContainer />
-          <Navbar />
-          <main> {children}</main>
-          <Footer />
-        </body>
-      </html>
+      <MessageProvider>
+        <html lang="en">
+          <body>
+            <ToastContainer />
+            <Navbar />
+            <main> {children}</main>
+            <Footer />
+          </body>
+        </html>
+      </MessageProvider>
     </AuthProvider>
   );
 };
