@@ -1,4 +1,4 @@
-type Message = {
+export type Message = {
   _id: string;
   sender: string;
   recipient: string;
