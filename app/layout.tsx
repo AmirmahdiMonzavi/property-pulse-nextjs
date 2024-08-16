@@ -4,6 +4,7 @@ import AuthProvider from "@/components/AuthProvider";
 import MessageProvider from "@/context/message-context";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
+import "photoswipe/dist/photoswipe.css"
 import "@/assets/styles/globals.css";
 
 export const metadata = {
