@@ -5,7 +5,7 @@ import Message from "@/models/Message";
 import { getSessionUser } from "@/utils/getSessionUser";
 import { revalidatePath } from "next/cache";
 
-const deletMessage = async (messageId: string) => {
+const deleteMessage = async (messageId: string) => {
   await connectDB();
 
   const sessionUser = await getSessionUser();
@@ -27,4 +27,4 @@ const deletMessage = async (messageId: string) => {
   revalidatePath("/messages", "page");
 };
 
-export default deletMessage;
+export default deleteMessage;
