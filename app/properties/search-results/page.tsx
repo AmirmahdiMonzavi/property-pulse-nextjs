@@ -22,7 +22,17 @@ const SearchResultsPage = async ({
 
   const locationPattern = new RegExp(searchParams.location, "i");
 
-  let query: any = {
+  let query: {
+    $or: [
+      { name: RegExp },
+      { description: RegExp },
+      { "location.state": RegExp },
+      { "location.city": RegExp },
+      { "location.street": RegExp },
+      { "location.zipcode": RegExp }
+    ];
+    type?: RegExp;
+  } = {
     $or: [
       { name: locationPattern },
       {
@@ -44,8 +54,6 @@ const SearchResultsPage = async ({
   const properties = convertToSerializableObject(
     propertiesDocs
   ) as PropertyType[];
-
-
 
   return (
     <>
